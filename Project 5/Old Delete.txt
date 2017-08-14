@@ -1,0 +1,54 @@
+/*private IntNode delete(IntNode t, int k)
+     {
+      IntNode p, p2, n;
+      IntNode result = t;//Shutting up the compiler
+      
+      if (t.getNum() == k)
+        {
+         IntNode nextLeft, nextRight;
+         nextLeft = t.getLeft();
+         nextRight = t.getRight();
+
+         if (nextLeft == null && nextRight == null)
+             result = null;
+
+         else if (nextLeft == null)
+           {
+             p = nextRight;
+             result = p;
+             }
+
+         else if (nextRight == null)
+           {
+             p = nextLeft;
+             result = p;
+             }
+
+         else
+           {
+             p2 = nextRight;
+             p = nextRight;
+             result = p2;
+
+             while (p.getLeft() != null)
+
+                 p = p.getLeft();
+                 p.setLeft(nextLeft);
+
+             }
+
+         }
+
+         if (k < t.getNum() && t.getLeft() != null)
+           {
+             n = delete(t.getLeft(), k);
+             t.setLeft(n);
+             }
+
+         else if ( t.getRight() != null)
+           {
+             n = delete(t.getRight(), k);
+             t.setRight(n);             
+              }
+         return result;
+        }    */

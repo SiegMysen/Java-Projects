@@ -1,0 +1,276 @@
+//Sean Lee
+//Project 3
+//Due:3/9/2016 Turned In:3/9/2016
+//The purpose of this is to output arrays recursively, find the index
+//of the largest element recursively,find the max block of the array
+//recursively, and finally reverse the order of the elements in the
+//array recursively. 
+
+class ArrayUtilities {  
+
+// Divide and conquer
+// Driver Method
+public static void out1(int data[], int n) 
+   {
+    out1(data,0,n-1);
+    System.out.println();
+    }
+//Recursive method    
+private static void out1(int data[],int left, int right) 
+   {
+   if (left > right) 
+   {
+   //do nothing
+    }
+    else
+    {
+    int mid =(left+right)/2;
+    out1(data,left,mid-1);
+    System.out.print(data[mid]+" ");
+    out1(data,mid+1,right);
+    }
+   }
+
+//1 element on the left, the rest of the array on the right
+//Driver Method
+public static void out2(int data[], int n) 
+ {
+   out2(data,0,n-1);
+   System.out.println();
+   }
+ 
+//Recursive method  
+private static void out2(int data[],int left, int right) 
+ {
+  if (left>right)
+  {
+  //do nothing
+   }
+ if (left == right) //1-element array
+   {
+    System.out.print(data[left]+" ");
+    }
+    
+ else
+  {
+   System.out.print(data[left]+" "); //Print first element.
+   out2(data,left+1,right); //Output all but the first element. 
+   }
+  }
+   
+   
+// All but 1 element on the left and the remaining elements on the right
+// Driver Method
+public static void out3(int data[], int n) 
+ {
+   out3Recursive(data,0,n-1);
+   System.out.println();
+   }
+//Recursive method     
+private static void out3Recursive(int data[],int left, int right) 
+ {
+  if(left == right) //1-element array.
+   {
+	 System.out.print(data[left]+" "); 
+	 }
+
+	else {
+
+		if (left>right) 
+      {
+       //do nothing
+		 }
+
+	else 
+    {
+      System.out.print(data[left]+" ");
+      out3Recursive(data,left+1, right);//Output all but last. 		
+
+   }
+  }
+ }
+ 
+// Swap the first and last elements, reverse the remaining array
+// Driver Method   
+public static void reverse(int[]data,int n)
+  {
+   reverse(data, 0, n-1);
+   }
+   
+//Recursive method  
+private static void reverse(int[] data, int left, int right)
+  {
+    if (left>right)
+    {
+     //do nothing
+     }  
+    else if(left<right)//Swap loop
+     {
+       int storage = data[left];
+       data[left] = data[right];
+       data[right] = storage;
+       reverse(data,left+1,right-1);//Recursive call
+        }
+      }
+  
+// Return the index of the largest element in the array.
+// Divide and conquer with a left half, a middle element,
+// and a right half. The largest element of an empty 
+// array does not make sense so you should not call the 
+// recursive method on an empty array.
+public static int largest(int data[], int n)
+  { 
+   if( n==0)//0 element array
+    {
+     System.out.println("Empty array.");
+     }
+     return largest(data,0,n-1);
+     
+    }
+     
+//Recursive method       
+private static int largest(int data[], int left, int right)
+ {
+  int result = 0, leftPlace = 0, rightPlace = 0;
+  
+  if (left > right)//0-element array.
+  {
+   // Do Nothing
+   }
+  else if (left == right) //1-element array.
+    {
+     result =left;//or data[0]
+     }
+   else
+    {
+     int middle = (left+right)/ 2;
+     
+     leftPlace = largest(data, left, middle-1);
+     rightPlace = largest(data, middle+1, right);
+     
+     if (data[leftPlace] > data[middle])//Determines the largest element
+       {                                //between the left side and 
+        result = leftPlace;             //middle.
+        }   
+     else
+     {
+      result = middle;
+      }
+          
+     if(data[rightPlace] > data[result])//Compares the greatest element 
+       {                                //of left and mid and compares 
+        result = rightPlace;            //element on the right. 
+        }
+        
+      }
+      return result;
+     }              
+    
+// Divide and conquer as was done in class. 
+// The maxBlock of an empty array does not make
+// sense so you should not call the recursive 
+// method on an empty array.
+// Driver method.
+public static int maxBlock(int data[], int n) 
+  {
+   if (n == 0)
+     {
+      System.out.println("Empty array.");
+      }
+      
+   int max_block = maxBlockSum(data,0,n-1);
+   return max_block;
+   }
+//Finds the greatest max block left of the middle element,
+//the greatest max block on the right of the middle element,
+//and calls the method that finds greatest  max block that
+//spans the middle element. Method then compares the three
+// and returns the greatest. 
+private static int maxBlockSum(int data[], int left, int right)
+  {
+    if (left==right)//1-element array.
+    {
+     return data[left];
+     }
+             
+   int mid = (left + right)/2;
+   
+   return max(maxBlockSum(data, left, mid),// Finds left Max Block recursively. 
+              maxBlockSum(data, mid+1, right),//Ditto right.
+              middleMaxBlock(data, left, mid, right));//Ditto mid.        
+                                                      
+  }
+  
+private static int middleMaxBlock(int data [], int left, int mid, int right)
+{
+    //Include elements on left of mid.
+    int sum = 0;
+    int sumOfLeft = 0;
+    for (int i = mid-1; i >= left; i--)
+    {//Checks to see if adding the next 
+     //element to the left of mid would 
+     //result in a greater sum.
+        sum = sum + data[i];
+        if (sum > sumOfLeft)
+          sumOfLeft = sum;
+    }
+    //In case the left side sum would adds a 
+    //negative number to the overall sum,it 
+    //would be better to calculate the middle
+    //max block without it.
+    if(sumOfLeft < 0)
+     {
+      sumOfLeft = 0;
+      }
+
+    // Include elements on right of mid
+    sum = 0;
+    int sumOfRight = 0;
+    for (int i = mid+1; i <= right; i++)
+    {//Checks to see if adding the next 
+     //element to the right of mid would 
+     //result in a greater sum.
+        sum = sum + data[i];
+        if (sum > sumOfRight)
+          sumOfRight = sum;
+    }
+    //In case the right side sum would adds a 
+    //negative number to the overall sum,it 
+    //would be better to calculate the middle
+    //max block without it.
+    if(sumOfRight < 0)
+     {
+      sumOfRight = 0;
+      }
+
+    //Return sum of elements on left and right of mid,
+    //as well as the middle element. This sum is what
+    //is compared against the max blocks of the left 
+    //and right sides of the array.
+    return sumOfLeft + sumOfRight+data[mid];
+}  
+  
+//A utility funtion to find maximum of two integers.
+private static int max(int a, int b) 
+ { 
+  return (a > b)? a : b; 
+   }
+
+//A utility funtion to find maximum of three integers.
+private static int max(int a, int b, int c) 
+ { 
+  return max(max(a, b), c); 
+   }
+
+//The usual
+public static String myName() 
+    {
+     String myName = "Sean Lee";
+     return myName;  
+     }
+     
+}
+
+TEST PROGRAM OUTPUT:
+
+

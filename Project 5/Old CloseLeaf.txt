@@ -1,0 +1,43 @@
+public int closeLeaf() 
+    {
+     int result;
+     if (this.root ==null)
+        result = 0;
+     else if (this.root.getLeft() == null && 
+        this.root.getRight() == null) 
+        {
+         result = 1;   
+         }
+     else
+      {
+       result = closeLeaf(this.root);
+       }
+       return result;
+     }
+     
+   private int closeLeaf(IntNode t) {
+        int result=0;//shutting up the compiler
+        
+        int minLeft = 0;
+        
+        if (t.getLeft() != null) 
+          {
+           minLeft = closeLeaf(t.getLeft())+1;
+           }
+
+        int minRight = 0;
+        
+        if (t.getRight() != null) 
+          {
+           minRight = closeLeaf(t.getRight())+1;
+           }
+        
+        if(minLeft > minRight)
+          result = minRight +1;
+        else if(minLeft < minRight)
+          result = minLeft +1;
+        else if(minLeft == minRight)
+          result = minLeft +1;
+          
+        return result;
+    }

@@ -1,0 +1,77 @@
+ public void rotateLeft(int num) 
+      {
+       root=rotateLeft(root,num);
+        }
+    
+    private static IntNode rotateLeft(IntNode t,int val)
+     {
+      if(t==null)
+       {//Item not found or empty tree,         
+        }//so nothing to do
+       
+      else
+       {  
+       if( val < t.getNum() )
+             {//value in my left subtree
+              if (t.getLeft() != null)
+                t.setLeft(rotateLeft(t.getLeft(),val));
+                }
+            else if( val > t.getNum())
+              {//value in my right subtree
+               if (t.getRight() != null)
+                t.setRight(rotateLeft(t.getRight(),val));
+                }
+            else
+             { // t.getNum() == val;  
+              IntNode oldRoot=t;
+          
+              if(t.getRight()!=null)
+               {
+                t =t.getRight();
+                }
+              oldRoot.setRight(t.getLeft());
+              t.setLeft(oldRoot);
+              }
+             }
+            return  t;
+           }
+            
+   // Rotate the node containing num to the right -- do nothing if not possible
+   // or num is not in the tree
+   public void rotateRight(int num)
+     {
+      root=rotateRight(root,num);
+      }
+      
+   private static IntNode rotateRight(IntNode t,int val)
+    {
+      if(t==null)
+       {//Item not found or empty tree,         
+        }//so nothing to do
+       
+      else
+       {  
+       if( val < t.getNum() )
+             {//value in my left subtree
+              if (t.getLeft() != null)
+                t.setLeft(rotateLeft(t.getLeft(),val));
+                }
+            else if( val > t.getNum())
+              {//value in my right subtree
+               if (t.getRight() != null)
+                t.setRight(rotateLeft(t.getRight(),val));
+                }
+            else
+             { // t.getNum() == val;  
+              IntNode oldRoot=t;
+          
+              if(t.getLeft()!=null)
+               {
+                t =t.getLeft();
+                }
+              oldRoot.setLeft(t.getRight());
+              t.setRight(oldRoot);
+              }
+             }
+            return  t;
+           }

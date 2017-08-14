@@ -1,0 +1,75 @@
+public void rotateLeft(int num) 
+      {
+       root=rotateLeft(root,num);
+        }
+    
+    private static IntNode rotateLeft(IntNode T,int num){
+
+      //easiest case
+      if(T==null)
+       {
+        }           
+      else if(num==T.getNum())
+        {//rotation part
+         IntNode oldRight=T.getRight();
+         
+         if(T.getRight()!=null)
+          {
+           T.setRight(oldRight.getLeft());
+           oldRight.setLeft(T);
+           T=oldRight;
+           }
+         else 
+          {
+           }
+       }
+       
+       else if(num>T.getNum())
+         {
+          T.setRight(rotateLeft(T.getRight(),num));
+          }
+      else
+        {
+         T.setLeft(rotateLeft(T.getLeft(),num));
+         }
+      return  T;
+     }    
+     
+   // Rotate the node containing num to the right -- do nothing if not possible
+   // or num is not in the tree
+   public void rotateRight(int num)
+     {
+      root=rotateRight(root,num);
+      }
+      
+   private static IntNode rotateRight(IntNode T,int num)
+    {
+      //easiest case
+      if(T==null)
+       {
+        }
+      else if(num==T.getNum())
+       {//rotation part
+        IntNode oldLeft=T.getLeft();
+        
+        if(T.getLeft()!=null)
+        {
+         T.setLeft(oldLeft.getRight());
+         oldLeft.setRight(T);
+         T=oldLeft;
+         }  
+        else 
+         {
+          }
+         }
+         
+       else if(num>T.getNum())
+         {
+          T.setRight(rotateRight(T.getRight(),num));
+          }
+       else
+         {
+          T.setLeft(rotateRight(T.getLeft(),num));
+          }
+     return T;
+    }   
